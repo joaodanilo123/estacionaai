@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Ponto {
+  id Int @id @default(autoincrement())
+  endereco String
+  coordenadaX String
+  coordenadaY String
+  tickets Ticket[]
+}
+
+model Ticket {
+  id Int @id @default(autoincrement())
+  ponto Ponto @relation(fields: [pontoId], references: [id])
+  pontoId Int
+  pagamento Pagamento?
+}
+
+model Pagamento {
+  id Int @id @default(autoincrement())
+  valor Float
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+  ticketId Int @unique
+}
