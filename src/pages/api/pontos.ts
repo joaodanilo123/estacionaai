@@ -1,6 +1,5 @@
+import { Ponto } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import Ponto from "../../types/Ponto";
-
 import { prisma } from "../../utils/db";
 
 const handlers = {

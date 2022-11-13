@@ -1,9 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { FormEvent, useState } from "react"
+import { useContextoGlobalMapa } from "./ContextoGlobalMapa";
 
 export default function PontoForm({ coordenadaX, coordenadaY }: { coordenadaX: string, coordenadaY: string }) {
 
     const [salvo, setSalvo] = useState(false);
     const [endereco, setEndereco] = useState("")
+
+    const contexto = useContextoGlobalMapa();
 
     const handleSubmit = async (ev: FormEvent) => {
         ev.preventDefault();
@@ -13,6 +16,8 @@ export default function PontoForm({ coordenadaX, coordenadaY }: { coordenadaX: s
             coordenadaY,
             endereco
         }
+
+        contexto.onSalvarPonto(formData);
 
         const response = await fetch("http://localhost:3000/api/pontos/", {
             method: "POST",
