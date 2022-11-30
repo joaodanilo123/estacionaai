@@ -3,11 +3,12 @@
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup, useMapEvent } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import { Ponto } from '@prisma/client';
 import MarcadorPosicaoAtual from './MarcadorPosicaoAtual';
 import { ContextoGlobalMapa } from './ContextoGlobalMapa';
+import { MarcadorPonto } from './MarcadorPonto';
 
 export default function Map() {
 
@@ -29,7 +30,7 @@ export default function Map() {
   }
 
   return (
-    <ContextoGlobalMapa.Provider value={{ onSalvarPonto: adicionarMarcadorPonto }}>
+    <ContextoGlobalMapa.Provider value={{ onSalvarPonto: adicionarMarcadorPonto}}>
       <MapContainer center={[-25, -40]} zoom={5} style={{ height: '80vh', width: '100%' }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -37,12 +38,10 @@ export default function Map() {
         />
 
         {pontos.map(ponto => (
-          <Marker key={ponto.id} position={[parseFloat(ponto.coordenadaX), parseFloat(ponto.coordenadaY)]}>
-            <Popup>
-              <h2>{ponto.endereco}</h2>
-              <span>Latitude={ponto.coordenadaX} Longitude={parseFloat(ponto.coordenadaY)} </span>
-            </Popup>
-          </Marker>
+          <div key={ponto.id}>
+            <MarcadorPonto ponto={ponto} />
+          </div>
+          
         ))}
         <MarcadorPosicaoAtual />
       </MapContainer>
@@ -50,3 +49,5 @@ export default function Map() {
 
   );
 }
+
+

@@ -15,19 +15,27 @@ model Ponto {
   endereco String
   coordenadaX String
   coordenadaY String
+  caixa Float
   tickets Ticket[]
+  relatoriosFaturamento RelatorioFaturamento[]
 }
 
 model Ticket {
   id Int @id @default(autoincrement())
   ponto Ponto @relation(fields: [pontoId], references: [id])
   pontoId Int
-  pagamento Pagamento?
+  valor Float
+  datahora DateTime
+  datahoralimite DateTime
+  minutos Int
 }
 
-model Pagamento {
+model RelatorioFaturamento {
   id Int @id @default(autoincrement())
-  valor Float
-  ticket Ticket @relation(fields: [ticketId], references: [id])
-  ticketId Int @unique
+  Ponto Ponto @relation(fields: [pontoId], references: [id])
+  pontoId Int
+  dataInicio DateTime
+  dataFim DateTime
+  total Float
 }
+  

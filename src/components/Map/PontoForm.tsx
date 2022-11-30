@@ -1,3 +1,4 @@
+import { Ponto } from "@prisma/client";
 import { FormEvent, useState } from "react"
 import { useContextoGlobalMapa } from "./ContextoGlobalMapa";
 
@@ -14,10 +15,9 @@ export default function PontoForm({ coordenadaX, coordenadaY }: { coordenadaX: s
         const formData = {
             coordenadaX,
             coordenadaY,
-            endereco
+            endereco,
+            caixa: 0
         }
-
-        contexto.onSalvarPonto(formData);
 
         const response = await fetch("http://localhost:3000/api/pontos/", {
             method: "POST",
@@ -29,6 +29,16 @@ export default function PontoForm({ coordenadaX, coordenadaY }: { coordenadaX: s
         
         if(response.status == 201) {
             setSalvo(true);
+
+            const ponto: Ponto = {
+                id: Number(response.body),
+                coordenadaX: formData.coordenadaX,
+                coordenadaY: formData.coordenadaY,
+                endereco: formData.endereco,
+                caixa: formData.caixa
+            }
+
+            contexto.onSalvarPonto(ponto);
         }
 
     }

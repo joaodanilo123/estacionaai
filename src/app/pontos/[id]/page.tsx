@@ -1,5 +1,4 @@
 import { Ponto } from "@prisma/client";
-import { AsideButtons } from "./AsideButtons";
 
 async function getPontos() {
     const res = await fetch('http://localhost:3000/api/pontos', { cache: 'no-store' });
@@ -21,7 +20,6 @@ export default async function PontosPage() {
                                 <p>Coordenada X: {ponto.coordenadaX}</p>
                                 <p>Coordenada Y: {ponto.coordenadaY}</p>
                             </main>
-                            <AsideButtons ponto={ponto}/>
                         </article>
                     ))}
                 </div>

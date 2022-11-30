@@ -1,6 +1,6 @@
 import { Ponto } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../utils/db";
+import { prisma } from "../../../utils/db";
 
 const handlers = {
 
@@ -11,9 +11,15 @@ const handlers = {
     },
 
     async post(req: NextApiRequest, res: NextApiResponse){
-        const ponto = await prisma.ponto.create({ data: req.body });
-        res.status(201).json(ponto.id);
-        res.end();
+        try {
+            const ponto = await prisma.ponto.create({ data: req.body });
+            res.status(201).json(ponto.id);
+            res.end();
+        } catch (error) {
+            res.status(500).json(error);
+            res.end();
+        }
+        
     }
 }
 

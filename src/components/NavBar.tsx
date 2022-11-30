@@ -1,6 +1,4 @@
-import { HtmlProps } from "next/dist/shared/lib/html-context";
 import Link from "next/link";
-import { PropsWithChildren } from "react";
 
 function NavButton(props: any) {
     return (
@@ -19,9 +17,7 @@ export default function NavBar() {
             </header>
 
             <NavButton href="/pontos">Pontos</NavButton>
-            <NavButton href="/tickets">Ticket</NavButton>
-            <NavButton href="/pagamentos">Pagamentos</NavButton>
-            <NavButton href="/usuarios">Usuarios</NavButton>
+            <NavButton href="/tickets">Tickets</NavButton>
         </nav>
     )
 }
