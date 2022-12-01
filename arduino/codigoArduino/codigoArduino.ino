@@ -1,4 +1,5 @@
 #define PINO_MOEDA 8
+#define MAX_MESSAGE_LENGTH 12
 #define BOTAO 7
 #define ID 1
 #include <LiquidCrystal.h>
@@ -9,6 +10,8 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 int estado;
 float valor = 0;
 float caixa = 0;
+bool finalizado = false;
+int resposta;
 
 void setup() {
   pinMode(PINO_MOEDA, INPUT);
@@ -29,16 +32,15 @@ void mostraMensagemLCDEstado0() {
 
 void mostraMensagemLCDEstado2() {
   lcd.setCursor(0, 0);
-  lcd.print("Enviado!");
-  lcd.setCursor(0, 1);
   lcd.print("Ticket Gerado");
+  lcd.setCursor(0, 1);
 }
 
 void mostraValorLCD(float v) {
   lcd.setCursor(0, 0);
   lcd.print("Insercao. Valor:");
   lcd.setCursor(0, 1);
-  lcd.print(v);
+  lcd.print(valor);
 }
 
 int inverterSinal(int sinal) {
@@ -63,10 +65,11 @@ int detectarBotaoERetornarEstado(int estadoAtual, int proximoEstado) {
 void loop() {
 
   if (estado == 0) {
+    finalizado = false;
     mostraMensagemLCDEstado0();
     estado = detectarBotaoERetornarEstado(estado, 1);
   } else if (estado == 1) {
-    
+
     mostraValorLCD(valor);
     int contatoMoeda = inverterSinal(digitalRead(PINO_MOEDA));
     if (contatoMoeda == HIGH) {
@@ -76,20 +79,29 @@ void loop() {
 
     estado = detectarBotaoERetornarEstado(estado, 2);
   } else if (estado == 2) {
-    caixa += valor;
+    if (!finalizado) {
+      caixa += valor;
 
-    char buffer[40];
-    char bufferValor[10];
-    dtostrf(valor, 5, 2, bufferValor);
-    sprintf(buffer, "{\"pontoId\":%d,\"valor\": %s}", ID, bufferValor);
+      char buffer[40];
+      char bufferValor[10];
+      dtostrf(valor, 5, 2, bufferValor);
+      sprintf(buffer, "{\"pontoId\":%d,\"valor\": %s}", ID, bufferValor);
 
-    Serial.println(buffer);
+      Serial.println(buffer);
 
+      valor = 0;
+     
+      while (!Serial.available());
+      resposta = Serial.readString().toInt();
+    
+      Serial.flush();
+      finalizado = true;
 
-    valor = 0;
-    mostraMensagemLCDEstado2();
-    delay(5000);
-    lcd.clear();
-    estado = 0;
+    } else {
+      mostraMensagemLCDEstado2();
+      lcd.print(resposta);
+      estado = detectarBotaoERetornarEstado(estado, 0);
+      valor = 0;
+    }
   }
 }
