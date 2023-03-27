@@ -6,36 +6,53 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "mysql"
+  url      = "mysql://root:teste@localhost:3306/estacionaai"
 }
 
-model Ponto {
+enum Role {
+  admin
+  costumer
+} 
+
+model User {
   id Int @id @default(autoincrement())
-  endereco String
-  coordenadaX String
-  coordenadaY String
-  caixa Float
+  name String
+  email String
+  password String
+  cpf String
+  phoneNumber String
+  address String  
+  role Role
+  vehicles Vehicle[] 
+}
+
+model Vehicle {
+  id Int @id @default(autoincrement())
+  licensePlate String
+  color String
+  model String
+  brand String
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model Point {
+  id Int @id @default(autoincrement())
+  Xpos String
+  Ypos String
+  address String
+  cashier Float
   tickets Ticket[]
-  relatoriosFaturamento RelatorioFaturamento[]
 }
 
 model Ticket {
   id Int @id @default(autoincrement())
-  ponto Ponto @relation(fields: [pontoId], references: [id])
-  pontoId Int
-  valor Float
-  datahora DateTime
-  datahoralimite DateTime
-  minutos Int
-}
-
-model RelatorioFaturamento {
-  id Int @id @default(autoincrement())
-  Ponto Ponto @relation(fields: [pontoId], references: [id])
-  pontoId Int
-  dataInicio DateTime
-  dataFim DateTime
-  total Float
+  point Point @relation(fields: [pointId], references: [id])
+  pointId Int
+  value Float
+  datetime DateTime
+  expiration DateTime
+  minutes Int
 }
   

@@ -1,7 +1,8 @@
 import { Ticket } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { TicketDataFormatoBR } from "../../../interfaces/TicketDataFormatoBR";
-import { prisma } from "../../../utils/db";
+import { prisma } from "../../../global/db";
+import errorMessage from "../../../global/globalErrorMessage";
 
 const handlers = {
 
