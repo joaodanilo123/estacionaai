@@ -1,7 +1,7 @@
-import { prisma } from "../global/db";
+import { prisma } from "../../global/db";
 import * as bcrypt from 'bcrypt'
 import { User } from "@prisma/client";
-import { errorMessage } from "../global/globalErrorMessage";
+import { errorMessage } from "../../global/globalErrorMessage";
 
 interface UserRegistrationParams {
     name: string,
@@ -11,7 +11,6 @@ interface UserRegistrationParams {
     password: string,
     address: string
 }
-
 
 export async function register(newUser: UserRegistrationParams) {
 
