@@ -2,8 +2,8 @@
 
 import { Point } from "@prisma/client";
 import { FormEvent, useState } from "react"
-import { useGlobalMapContext } from "../hooks/useGlobalMapContext";
-import { Button } from "../../ui/Button";
+import { useGlobalMapContext } from "../../../hooks/useGlobalMapContext";
+import { Button } from "../../control/Button";
 import { savePoint } from "./savePoint";
 
 export default function PontoForm({ Xpos, Ypos }: { Xpos: string, Ypos: string }) {

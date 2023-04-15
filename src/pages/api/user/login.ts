@@ -1,38 +1,32 @@
-import { prisma } from "../../../global/db"
-import * as bcrypt from 'bcrypt'
-import { User } from "@prisma/client";
 import jwt from 'jsonwebtoken';
-import { errorMessage } from '../../../global/globalErrorMessage';
+import UserService from "../../../services/User/UserService";
+import { NextApiRequest, NextApiResponse } from "next";
 
-interface UserLoginParams {
-    email: string,
-    password: string
-}
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-export async function login(userLogin: UserLoginParams) {
+    if (req.method !== 'POST') {
+        return res.status(405).end();
+    }
+
     try {
 
-        const user: User | null = await prisma.user.findUnique({ where: { email: userLogin.email } });
+        const login = req.body;
+        const secret = process.env.JWT_SECRET;
 
-        if (!user) {
-            return errorMessage("Email não cadastrado");
-        }
+        if (!secret) throw 500;
 
-        const match = await bcrypt.compare(userLogin.password, user.password);
+        const user: any = await UserService.login({
+            email: login.email,
+            password: login.password
+        })
 
-        if (!match) {
-            return errorMessage("Senha incorreta");
-        }
+        if (!user) throw 401;
 
-        const secret = process.env.JWT_SECRET
+        const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
+        res.status(200).json({ token });
 
-        if(secret){
-            const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
-            return { success: true, token };
-        } else throw new Error();
-        
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
-        return errorMessage("Erro ao fazer login");
+        res.status(error).end();
     }
 }

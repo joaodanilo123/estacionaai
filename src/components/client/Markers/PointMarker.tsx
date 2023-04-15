@@ -33,7 +33,7 @@ export function PointMarker({ point }: { point: Point }) {
         <footer className='flex flex-row w-full mt-2'>
           <section className='flex-1 text-green-600'>
             <span className='text-base'>Caixa:</span>
-            <div className='text-left text-2xl'>R$ {point.cashier.toFixed(2).toString().replace(".", ",")}</div>
+            {/* <div className='text-left text-2xl'>R$ {point.cashier.toFixed(2).toString().replace(".", ",")}</div> */}
           </section>
           <section className=' flex-1 text-blue-600 text-center'>
             <span className='text-base'>Tickets Ativos</span>

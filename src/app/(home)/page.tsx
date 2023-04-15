@@ -1,4 +1,4 @@
-import { Map } from "../../../components/client/Map/Map"
+import { Map } from "../../components/client/Map/Map"
 
 export default async function HomePage() {
 

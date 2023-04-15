@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
   db:
@@ -9,14 +9,16 @@ services:
       MYSQL_ROOT_PASSWORD: teste
       MYSQL_DATABASE: estacionai
     ports:
-      - "3036:3036"
+      - "3306:3306"
 
   app:
     build: .
+    command: bash -c "npx prisma migrate dev && npm run dev"
     ports:
       - "3000:3000"
     volumes:
       - .:/app
+      
     depends_on:
       - db
 

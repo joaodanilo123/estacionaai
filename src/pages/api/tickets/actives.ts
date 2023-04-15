@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../global/db"
-import errorMessage from "../../../global/globalErrorMessage";
+import { prisma } from "../../../util/db"
+import errorMessage from "../../../util/errorMessage";
 
 const handlers = {
 

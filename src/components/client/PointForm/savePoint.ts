@@ -16,7 +16,7 @@ export const savePoint = async ({Xpos, Ypos, address} : handleSubmitParams) => {
         cashier: 0
     }
 
-    const response = await fetch("http://localhost:3000/api/points/", {
+    const response = await fetch("/api/points", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

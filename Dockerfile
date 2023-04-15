@@ -1,6 +1,8 @@
-FROM node:latest
+FROM node:alpine
 
 ENV NODE_ENV=development
+
+ENV JTW_SECRET=testejwt
 
 WORKDIR /app
 
@@ -12,4 +14,5 @@ COPY . .
 
 EXPOSE 3000
 
+RUN ["npx", "prisma", "migrate", "dev"]
 CMD ["npm", "run", "dev"]

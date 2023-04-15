@@ -3,11 +3,12 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:teste@localhost:3306/estacionaai"
+  url      = "mysql://root:teste@db:3306/estacionai"
 }
 
 enum Role {

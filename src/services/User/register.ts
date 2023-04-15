@@ -1,7 +1,6 @@
-import { prisma } from "../../global/db";
+import { prisma } from "../../util/db";
 import * as bcrypt from 'bcrypt'
 import { User } from "@prisma/client";
-import { errorMessage } from "../../global/globalErrorMessage";
 
 interface UserRegistrationParams {
     name: string,
@@ -53,12 +52,12 @@ export async function register(newUser: UserRegistrationParams) {
             return user.id
 
         } else {
-            return errorMessage("Email ou CPF já cadastrados");
+            throw new Error("Email ou CPF já cadastrados");
         }
 
     } catch (error) {
         console.log(error);
-        return errorMessage("Erro ao cadastrar usuário");
+        throw new Error("Erro ao cadastrar usuário");
     }
 
 }

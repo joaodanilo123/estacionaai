@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../global/db";
+import { prisma } from "../../../../util/db";
 
 const handlers = {
 

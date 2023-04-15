@@ -9,7 +9,7 @@ interface NavButtonProps {
 function NavButton(props: NavButtonProps) {
     return (
         <Link href={props.href}
-            className="text-center flex justify-center  h-full max-w-[15%] min-w-[10%] hover:text-neutral-300">
+            className="text-center flex justify-center  h-full max-w-[15%] min-w-[10%] hover:text-neutral-300 mx-2">
             <div className="my-auto">{props.children}</div>
         </Link>
     );

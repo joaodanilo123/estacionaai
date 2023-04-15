@@ -6,7 +6,7 @@ import "leaflet-defaulticon-compatibility";
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useEffect, useState } from 'react';
 import { Point } from '@prisma/client';
-import { globalMapContext } from '../hooks/useGlobalMapContext';
+import { globalMapContext } from '../../../hooks/useGlobalMapContext';
 import ActualPositionMarker from '../Markers/ActualPositionMarker';
 import { PointMarker } from '../Markers/PointMarker';
 
