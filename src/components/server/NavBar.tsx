@@ -19,7 +19,7 @@ export default function NavBar() {
     return (
         <nav className="flex flex-row w-full h-20 bg-blue-600">
             <header className="block m-2 text-2xl font-bold p-4 flex-1 text-left">
-                <h1><Link href="/">EstacionaAi</Link></h1>
+                <h1><Link href="/">EstacionAí</Link></h1>
             </header>
 
             <NavButton href="/pontos">Pontos</NavButton>

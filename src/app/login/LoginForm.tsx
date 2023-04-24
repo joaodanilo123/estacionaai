@@ -3,14 +3,14 @@
 import { Button } from "../../components/control/Button";
 import { Input } from "../../components/control/Input";
 import Image from "next/image";
-import LoadingSVG from "../../../../public/loading.svg"
+import LoadingSVG from "../../../public/Loading.svg"
 import { useFormSubmission } from "../../hooks/useFormSubmission";
 
 export function LoginForm() {
 
     const url = "/api/user/login";
 
-    const form = useFormSubmission(url, 'POST');
+    const form = useFormSubmission(url, 'POST', 200);
 
     return (
         <>
@@ -24,7 +24,7 @@ export function LoginForm() {
                 className="bg-white text-black px-5 py-10 [&>*]:my-4 rounded-md mt-10">
                 <h2 className="text-2xl font-medium text-center">Entre na sua conta</h2>
 
-                {form.errorMessage && (
+                {form.responseError && (
                     <div className="text-center bg-red-600 text-white p-2 font-medium rounded-md">
                         <span>Usuário ou senha incorretos</span>
                     </div>

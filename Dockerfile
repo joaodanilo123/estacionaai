@@ -4,6 +4,9 @@ ENV NODE_ENV=development
 
 ENV JTW_SECRET=testejwt
 
+RUN apk update && apk add bash
+SHELL ["/bin/bash", "-c"]
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -14,5 +17,4 @@ COPY . .
 
 EXPOSE 3000
 
-RUN ["npx", "prisma", "migrate", "dev"]
 CMD ["npm", "run", "dev"]

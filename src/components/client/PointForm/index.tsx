@@ -35,8 +35,8 @@ export default function PontoForm({ Xpos, Ypos }: { Xpos: string, Ypos: string }
             <span className="m-1 font-bold">Longitude: {Ypos}</span>
 
             {!saved ?
-                (<Button title="Salvar Ponto" type="submit" />)
-                : <Button title="Ponto Salvo" disabled />}
+                (<Button  type="submit">Salvar</Button>)
+                : <Button title="Ponto Salvo" disabled>Ponto Cadastrado</Button>}
         </form>
     );
 }

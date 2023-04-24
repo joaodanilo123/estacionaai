@@ -1,17 +1,16 @@
 'use client';
 
-import { FormEvent, useState } from "react";
 import { Button } from "../../components/control/Button";
 import { Input } from "../../components/control/Input";
 import Image from "next/image";
-import LoadingSVG from "../../../../public/loading.svg"
+import LoadingSVG from "../../../public/Loading.svg"
 import { useFormSubmission } from "../../hooks/useFormSubmission";
 
 export function SignupForm() {
 
     const url = "/api/signup";
 
-    const form = useFormSubmission(url, 'POST'); 
+    const form = useFormSubmission(url, 'POST', 200); 
 
     return (
         <>
@@ -25,9 +24,9 @@ export function SignupForm() {
                 className="bg-white text-black px-20 py-10 [&>*]:my-4 rounded-md mt-10">
 
                 <h2 className="text-2xl font-medium">Cadastro de usuário</h2>
-                {form.errorMessage && (
+                {form.responseError && (
                     <div className="text-center bg-red-600 text-white p-2 font-medium rounded-md">
-                        <span>{form.errorMessage}</span>
+                        <span>{form.responseData}</span>
                     </div>
                 )}
 
